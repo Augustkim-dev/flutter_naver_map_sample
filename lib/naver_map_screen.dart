@@ -16,14 +16,16 @@ class _NaverMapScreenState extends State<NaverMapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    late NaverMapController mapController;
     return Scaffold(
       appBar: AppBar(
         title: Text('Map'),
       ),
       body: Container(
         child: NaverMap(
-          options: const NaverMapViewOptions(),
+          options: const NaverMapViewOptions(locationButtonEnable: true),
           onMapReady: (controller) {
+            mapController = controller;
             print('map ready');
             controller.addOverlay(marker);
             marker.openInfoWindow(onMarkerInfoWindow);
