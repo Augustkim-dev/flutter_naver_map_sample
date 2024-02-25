@@ -9,6 +9,11 @@ class NaverMapScreen extends StatefulWidget {
 }
 
 class _NaverMapScreenState extends State<NaverMapScreen> {
+  final marker = NMarker(id: "test", position: NLatLng(37.5267768, 127.040659));
+  final onMarkerInfoWindow = NInfoWindow.onMarker(id: "test", text: "카페지오");
+  final infoWindow = NInfoWindow.onMap(
+      id: "test", position: NLatLng(37.5267768, 127.040659), text: "인포윈도우 텍스트");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +25,12 @@ class _NaverMapScreenState extends State<NaverMapScreen> {
           options: const NaverMapViewOptions(),
           onMapReady: (controller) {
             print('map ready');
+            controller.addOverlay(marker);
+            marker.openInfoWindow(onMarkerInfoWindow);
+            // controller.addOverlay(infoWindow);
+            marker.setOnTapListener((NMarker marker) {
+              print("마커가 터치되었습니다. id: {$marker.id}");
+            });
           },
         ),
       ),
