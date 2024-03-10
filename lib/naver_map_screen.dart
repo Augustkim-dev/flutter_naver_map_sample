@@ -17,11 +17,13 @@ class _NaverMapScreenState extends State<NaverMapScreen> {
   late NaverMapController mapController;
 
   late final ScrollController scrollController;
+  late final PanelController panelController;
 
   @override
   void initState() {
     super.initState();
     scrollController = ScrollController();
+    panelController = PanelController();
   }
 
   Widget WidgetNaverMapView() {
@@ -35,7 +37,11 @@ class _NaverMapScreenState extends State<NaverMapScreen> {
         // controller.addOverlay(infoWindow);
         marker.setOnTapListener((NMarker marker) {
           print("마커가 터치되었습니다. id: ${marker.info.id}");
+          panelController.open();
         });
+      },
+      onMapTapped: (point, latLng) {
+        panelController.close();
       },
     );
   }
@@ -85,10 +91,13 @@ class _NaverMapScreenState extends State<NaverMapScreen> {
       ),
       body: SlidingUpPanel(
         body: WidgetNaverMapView(),
+        minHeight: 10.0,
         scrollController: scrollController,
         panelBuilder: () {
           return scrollingListView();
         },
+        controller: panelController,
+        defaultPanelState: PanelState.CLOSED,
       ),
     );
   }
