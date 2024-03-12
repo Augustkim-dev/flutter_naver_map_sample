@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
@@ -12,8 +13,7 @@ class NaverMapScreen extends StatefulWidget {
 class _NaverMapScreenState extends State<NaverMapScreen> {
   final marker = NMarker(id: "test", position: NLatLng(37.5267768, 127.040659));
   final onMarkerInfoWindow = NInfoWindow.onMarker(id: "test", text: "카페지오");
-  final infoWindow = NInfoWindow.onMap(
-      id: "test", position: NLatLng(37.5267768, 127.040659), text: "인포윈도우 텍스트");
+  final infoWindow = NInfoWindow.onMap(id: "test", position: NLatLng(37.5267768, 127.040659), text: "인포윈도우 텍스트");
   late NaverMapController mapController;
 
   late final ScrollController scrollController;
@@ -26,7 +26,7 @@ class _NaverMapScreenState extends State<NaverMapScreen> {
     panelController = PanelController();
   }
 
-  Widget WidgetNaverMapView() {
+  Widget widgetNaverMapView() {
     return NaverMap(
       options: const NaverMapViewOptions(locationButtonEnable: true),
       onMapReady: (controller) {
@@ -58,9 +58,8 @@ class _NaverMapScreenState extends State<NaverMapScreen> {
               Container(
                 width: 30,
                 height: 5,
-                decoration: BoxDecoration(
-                    color: Colors.grey[700],
-                    borderRadius: BorderRadius.all(Radius.circular(12.0))),
+                decoration:
+                    BoxDecoration(color: Colors.grey[700], borderRadius: BorderRadius.all(Radius.circular(12.0))),
               ),
             ],
           ),
@@ -90,7 +89,25 @@ class _NaverMapScreenState extends State<NaverMapScreen> {
         title: Text('Map'),
       ),
       body: SlidingUpPanel(
-        body: WidgetNaverMapView(),
+        body: Stack(children: [
+          widgetNaverMapView(),
+          Positioned(
+            left: 50,
+            right: 50,
+            top: 20,
+            child: Container(
+              width: 200,
+              height: 40,
+              color: Colors.black38,
+              child: Center(
+                child: Text(
+                  'My Shop List',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ),
+        ]),
         minHeight: 10.0,
         scrollController: scrollController,
         panelBuilder: () {
