@@ -193,6 +193,25 @@ class _NaverMapScreenState extends State<NaverMapScreen> {
     );
   }
 
+  Widget widgetTopInfoWindow() {
+    return Positioned(
+      left: 50,
+      right: 50,
+      top: 20,
+      child: Container(
+        width: 200,
+        height: 40,
+        color: Colors.black38,
+        child: Center(
+          child: Text(
+            'My Shop List',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -202,22 +221,7 @@ class _NaverMapScreenState extends State<NaverMapScreen> {
       body: SlidingUpPanel(
         body: Stack(children: [
           widgetNaverMapView(),
-          Positioned(
-            left: 50,
-            right: 50,
-            top: 20,
-            child: Container(
-              width: 200,
-              height: 40,
-              color: Colors.black38,
-              child: Center(
-                child: Text(
-                  'My Shop List',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-          ),
+          widgetTopInfoWindow(),
         ]),
         minHeight: 10.0,
         scrollController: scrollController,
